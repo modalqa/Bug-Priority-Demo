@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Priority Matrix Demo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .section {
+            display: none;
+        }
+        .product-description p {
+            white-space: nowrap; /* Simulasi teks terpotong pada Safari */
+        }
+        img[alt="Cart"] {
+            filter: brightness(4); /* Icon terlihat kurang jelas */
+        }
+        .about-us p {
+            color: red; /* Menandai teks yang salah */
+        }
+        .product-image img {
+            max-width: 100%;
+            height: auto;
+        }
+        .active-section {
+            display: block;
+        }
+        .product-details {
+        display: flex;
+        align-items: flex-start;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    .product-image {
+        flex: 1;
+        max-width: 200px;
+        margin-right: 20px;
+        
+    }
+    .product-info {
+        flex: 2;
+    }
+    .product-description {
+        max-height: 100px; /* Simulasi deskripsi terpotong */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    .loading-spinner {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 6px solid rgba(0, 0, 0, 0.1);
+        border-radius: 50%;
+        border-top: 6px solid #3498db;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="list-group" id="menu-list">
+                    <a href="#high-critical" class="list-group-item list-group-item-action" onclick="showSection('high-critical', this)">High Priority - Critical Severity</a>
+                    <a href="#high-major" class="list-group-item list-group-item-action" onclick="showSection('high-major', this)">High Priority - Major Severity</a>
+                    <a href="#high-minor" class="list-group-item list-group-item-action" onclick="showSection('high-minor', this)">High Priority - Minor Severity</a>
+                    <a href="#high-trivial" class="list-group-item list-group-item-action" onclick="showSection('high-trivial', this)">High Priority - Trivial Severity</a>
+                    <a href="#medium-critical" class="list-group-item list-group-item-action" onclick="showSection('medium-critical', this)">Medium Priority - Critical Severity</a>
+                    <a href="#medium-major" class="list-group-item list-group-item-action" onclick="showSection('medium-major', this)">Medium Priority - Major Severity</a>
+                    <a href="#medium-minor" class="list-group-item list-group-item-action" onclick="showSection('medium-minor', this)">Medium Priority - Minor Severity</a>
+                    <a href="#medium-trivial" class="list-group-item list-group-item-action" onclick="showSection('medium-trivial', this)">Medium Priority - Trivial Severity</a>
+                    <a href="#low-minor" class="list-group-item list-group-item-action" onclick="showSection('low-minor', this)">Low Priority - Minor Severity</a>
+                    <a href="#low-trivial" class="list-group-item list-group-item-action" onclick="showSection('low-trivial', this)">Low Priority - Trivial Severity</a>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <div class="section active-section" id="high-critical">
+                    <h2>High Priority</h2>
+                    <h3>Critical Severity</h3>
+                    <p><strong>Bug:</strong> Halaman checkout gagal dimuat saat pelanggan mencoba checkout.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Tambahkan item ke keranjang belanja.</li>
+                        <li>Navigate to the checkout page.</li>
+                        <li>Perhatikan bahwa halaman gagal dimuat dan menampilkan pesan kesalahan.</li>
+                    </ol>
+                    <button id="checkout-button" class="btn btn-danger" onclick="goToCheckout()">Checkout</button>
+                </div>
+
+                <div class="section" id="high-major">
+                    <h3>Major Severity</h3>
+                    <p><strong>Bug:</strong> Fungsi pencarian tidak berfungsi dengan baik.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Masukkan kata kunci produk di bilah pencarian.</li>
+                        <li>Klik tombol "Search".</li>
+                        <li>Perhatikan bahwa hasil pencarian tidak relevan atau tidak sesuai dengan kata kunci yang dimasukkan.</li>
+                    </ol>
+                    <input type="text" id="search-bar" class="form-control mb-2" placeholder="Search for products">
+                    <button class="btn btn-primary" onclick="performSearch()">Search</button>
+                    <div id="search-results" class="mt-2"></div>
+
+                </div>
+
+                <div class="section" id="high-minor">
+                    <h3>Minor Severity</h3>
+                    <p><strong>Bug:</strong> Deskripsi produk tidak ditampilkan dengan benar pada beberapa browser.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to the product page using Safari.</li>
+                        <li>Perhatikan bahwa deskripsi produk terpotong atau tidak ditampilkan dengan benar.</li>
+                        <li>Gunakan browser yang berbeda, seperti Chrome atau Firefox, untuk membandingkan hasilnya.</li>
+                    </ol>
+                    <div class="product-details">
+                        <div class="product-image">
+                            <img src="product-image.jpg" alt="Product Image" class="img-fluid">
+                        </div>
+                        <div class="product-info">
+                            <h4>Product Name</h4>
+                            <p><strong>Price:</strong> $120</p>
+                            <p><strong>Description:</strong></p>
+                            <div class="product-description">
+                                <p>This is a detailed description of the product that might be cut off on some browsers. It includes key features, specifications, and other relevant information to help customers make informed purchasing decisions. The description should be long enough to test the display limitations of different browsers.</p>
+                            </div>
+                            <button class="btn btn-primary">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="high-trivial">
+                    <h3>Trivial Severity</h3>
+                    <p><strong>Bug:</strong> Icon keranjang belanja tidak terlihat jelas.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to any page on the website.</li>
+                        <li>Look at the shopping cart icon in the header.</li>
+                        <li>Perhatikan bahwa ikon keranjang belanja terlihat pudar atau kurang jelas.</li>
+                    </ol>
+                    <div class="bg-light p-2">
+                        <img src="cart-icon.png" alt="Cart">
+                    </div>
+                </div>
+
+                <div class="section" id="medium-critical">
+                    <h2>Medium Priority</h2>
+                    <h3>Critical Severity</h3>
+                    <p><strong>Bug:</strong> Pengguna tidak bisa mengubah alamat pengiriman di halaman profil.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Login ke akun pengguna.</li>
+                        <li>Navigate to the profile page.</li>
+                        <li>Coba ubah alamat pengiriman dan klik tombol "Save Address".</li>
+                        <li>Perhatikan bahwa perubahan tidak tersimpan dan menampilkan pesan kesalahan.</li>
+                    </ol>
+                    <form id="update-address-form">
+                        <input type="text" id="new-address" class="form-control mb-2" placeholder="Enter new address">
+                        <button type="button" class="btn btn-warning" onclick="updateAddress()">Save Address</button>
+                    </form>
+                </div>
+
+                <div class="section" id="medium-major">
+                    <h3>Major Severity</h3>
+                    <p><strong>Bug:</strong> Beberapa metode pembayaran tidak tersedia atau tidak dapat dipilih.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Tambahkan item ke keranjang belanja.</li>
+                        <li>Navigate to the checkout page.</li>
+                        <li>Coba pilih metode pembayaran seperti Bank Transfer.</li>
+                        <li>Perhatikan bahwa opsi ini tidak tersedia atau tidak dapat dipilih.</li>
+                    </ol>
+                    <div id="payment-methods">
+                        <label class="mr-3">
+                            <input type="radio" name="payment" value="credit-card"> Credit Card
+                        </label>
+                        <label class="mr-3">
+                            <input type="radio" name="payment" value="paypal"> PayPal
+                        </label>
+                        <label>
+                            <input type="radio" name="payment" value="bank-transfer" disabled> Bank Transfer
+                        </label>
+                    </div>
+                </div>
+
+                <div class="section" id="medium-minor">
+                    <h3>Minor Severity</h3>
+                    <p><strong>Bug:</strong> Filter harga tidak bekerja dengan benar.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to the product listing page.</li>
+                        <li>Gunakan filter harga untuk memilih rentang harga.</li>
+                        <li>Perhatikan bahwa produk di luar rentang harga yang dipilih tetap muncul dalam hasil pencarian.</li>
+                    </ol>
+                    <input type="range" id="price-filter" class="form-control-range mb-2" min="0" max="200" step="10" oninput="filterPrice()">
+                    <span id="selected-price">0</span>
+                    
+                    <div id="product-list" class="mt-3">
+                        <!-- Products will be dynamically displayed here -->
+                    </div>
+                </div>
+
+                <div class="section" id="medium-trivial">
+                    <h3>Trivial Severity</h3>
+                    <p><strong>Bug:</strong> Typo pada halaman "Tentang Kami".</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to the "About Us" page.</li>
+                        <li>Perhatikan bahwa terdapat typo pada teks di halaman tersebut.</li>
+                    </ol>
+                    <div class="about-us">
+                        <p>Kami menjual produk-produk berkualtias.</p>
+                    </div>
+                </div>
+
+                <div class="section" id="low-minor">
+                    <h2>Low Priority</h2>
+                    <h3>Minor Severity</h3>
+                    <p><strong>Bug:</strong> Produk yang sudah tidak tersedia tidak diberi label dengan jelas.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to the product listing page.</li>
+                        <li>Cari produk yang sudah tidak tersedia.</li>
+                        <li>Perhatikan bahwa produk tersebut tidak diberi label "Out of Stock" atau penanda lainnya.</li>
+                    </ol>
+                    <div class="product">
+                        <img src="product-image.png" alt="Product Image">
+                        <p>Product Name</p>
+                        <button class="btn btn-secondary" onclick="addToCart()">Add to Cart</button>
+                    </div>
+                </div>
+
+                <div class="section" id="low-trivial">
+                    <h3>Trivial Severity</h3>
+                    <p><strong>Bug:</strong> Gambar produk memerlukan waktu lebih lama untuk dimuat.</p>
+                    <p><strong>Steps to Reproduce:</strong></p>
+                    <ol>
+                        <li>Navigate to the product page with a high-resolution image.</li>
+                        <li>Perhatikan bahwa gambar memerlukan waktu lama untuk dimuat sepenuhnya.</li>
+                    </ol>
+                    <div class="product-image">
+                        <div class="loading-spinner" id="loading-spinner"></div>
+                        <img src="high-resolution-image.jpg" alt="High Res Product Image" id="product-image">
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId, element) {
+            // Sembunyikan semua section
+            var sections = document.querySelectorAll('.section');
+            sections.forEach(function(section) {
+                section.classList.remove('active-section');
+            });
+            // Tampilkan section yang dipilih
+            document.getElementById(sectionId).classList.add('active-section');
+
+            // Hapus kelas active dari semua item menu
+            var menuItems = document.querySelectorAll('.list-group-item');
+            menuItems.forEach(function(menuItem) {
+                menuItem.classList.remove('active');
+            });
+            // Tambahkan kelas active ke item menu yang dipilih
+            element.classList.add('active');
+        }
+
+        function goToCheckout() {
+            // Simulasi kesalahan server
+            window.location.href = "/checkout?error=500"; // Redirect ke halaman error
+        }
+
+        function performSearch() {
+    var query = document.getElementById('search-bar').value;
+    // Simulasi hasil pencarian yang tidak relevan
+    var irrelevantResults = [
+        "Gado-gado",
+        "Rujak Buah",
+        "Ayam Penyet",
+        "Pop Mie"
+    ];
+
+    // Membersihkan hasil pencarian sebelumnya
+    var resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = '';
+
+    // Menampilkan hasil pencarian yang tidak relevan
+    irrelevantResults.forEach(function(result) {
+        var resultItem = document.createElement('div');
+        resultItem.className = 'search-result-item';
+        resultItem.textContent = result;
+        resultsContainer.appendChild(resultItem);
+    });
+
+    // Menampilkan pesan hasil pencarian
+    alert("Success found relevant results for: " + query);
+}
+
+
+        function updateAddress() {
+            // Simulasi gagal menyimpan alamat
+            alert("Unable to save address. Please try again later."); // Pesan error
+        }
+
+        function filterPrice() {
+            var price = document.getElementById('price-filter').value;
+            document.getElementById('selected-price').innerText = price;
+            // Simulasi filter tidak bekerja
+            alert("Filtering products within price: " + price); // Produk di luar rentang tetap muncul
+        }
+
+        function addToCart() {
+            // Simulasi produk tidak tersedia
+            alert("Item not available");
+        }
+    </script>
+    <script>
+        // Daftar produk dengan harga
+        var products = [
+            { name: "Product 1", price: 50 },
+            { name: "Product 2", price: 100 },
+            { name: "Product 3", price: 150 },
+            { name: "Product 4", price: 200 },
+            { name: "Product 5", price: 250 }
+        ];
+    
+        function displayProducts(filteredProducts) {
+            var productList = document.getElementById('product-list');
+            productList.innerHTML = ''; // Bersihkan daftar produk
+    
+            filteredProducts.forEach(function(product) {
+                var productItem = document.createElement('div');
+                productItem.className = 'product-item';
+                productItem.textContent = `${product.name} - $${product.price}`;
+                productList.appendChild(productItem);
+            });
+        }
+    
+        function filterPrice() {
+            var price = document.getElementById('price-filter').value;
+            document.getElementById('selected-price').innerText = price;
+    
+            // Filter produk berdasarkan rentang harga
+            var filteredProducts = products.filter(function(product) {
+                return product.price <= price;
+            });
+    
+            // Tampilkan produk yang difilter
+            displayProducts(filteredProducts);
+        }
+    
+        // Inisialisasi dengan menampilkan semua produk pada awalnya
+        displayProducts(products);
+    </script>
+    <script>
+        // Simulasi gambar yang tidak kunjung selesai dimuat
+        var img = document.getElementById('product-image');
+        var spinner = document.getElementById('loading-spinner');
+    
+        img.onload = function() {
+            spinner.style.display = 'none'; // Sembunyikan spinner saat gambar berhasil dimuat
+        };
+    
+        img.onerror = function() {
+            spinner.style.display = 'none'; // Sembunyikan spinner jika terjadi kesalahan
+        };
+    
+        // Simulasikan keterlambatan dalam memuat gambar
+        setTimeout(function() {
+            spinner.style.display = 'block'; // Tampilkan spinner
+        }, 100); // Tampilkan spinner setelah 100ms
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
