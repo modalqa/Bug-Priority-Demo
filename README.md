@@ -45,11 +45,12 @@ Matriks ini membantu mengkategorikan bug berdasarkan kombinasi dari prioritas da
 3. **Kategorikan Bug**: Gunakan matriks untuk mengidentifikasi kombinasi prioritas dan keparahan.
 4. **Alokasikan Sumber Daya**: Prioritaskan perbaikan bug berdasarkan kategori yang diidentifikasi.
 
-Dengan menggunakan Bug Priority Matrix, tim pengembangan dan QA dapat lebih efisien dalam mengalokasikan sumber daya dan menyelesaikan masalah yang paling kritis terlebih dahulu.
-
 ## Contoh Kasus
 - **High Priority, Critical Severity**: Gangguan sistem yang menyebabkan data hilang. Harus segera diperbaiki.
 - **Low Priority, Trivial Severity**: Kesalahan penulisan kosmetik di halaman produk. Bisa ditangani di kemudian hari.
+
+## Contoh Bug
+Untuk melihat contoh bug yang diilustrasikan menggunakan Bug Priority Matrix, kunjungi: [Bug Priority Demo](https://modalqa.github.io/Bug-Priority-Demo/).
 
 Gunakan matriks ini untuk membantu manajemen bug dalam proyek Anda dan memastikan masalah ditangani dengan prioritas yang sesuai.
 
